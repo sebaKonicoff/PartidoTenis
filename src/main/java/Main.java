@@ -17,7 +17,7 @@ public class Main {
             sprobJugador = sc.nextLine();
         }while (!esNumerico(sprobJugador));
         double probJugador1 = (Double.parseDouble(sprobJugador)) / 100;
-        int bo;
+        double bo;
         do {
             System.out.print("Sets al mejor de (3 o 5): ");
             bo = sc.nextInt();
