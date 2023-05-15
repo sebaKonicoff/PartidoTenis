@@ -7,7 +7,6 @@ public class Game {
     private double prob_j1;
 
     Random rm = new Random();
-    int diferenciaPuntos = 2;
     String puntos[] = {"0", "15", "30", "40", "Ventaja"};
 
     public Game(int saca, double prob_j1) {
@@ -47,20 +46,22 @@ public class Game {
         do{
             seJuegaPunto(nom_j1, nom_j2);
 
-            if (puntoGanadoJ1 == 4 && puntoGanadoJ2 <=2){
+            if ((puntoGanadoJ1 == 4 && puntoGanadoJ2 <=2) || (puntoGanadoJ1 == 5)){
                 System.out.println("Game para " + nom_j1);
                 gameGanado = 1; //game ganado por el jugador 1
             }
-            else if (puntoGanadoJ2 == 4 && puntoGanadoJ1 <=2){
+            else if ((puntoGanadoJ2 == 4 && puntoGanadoJ1 <=2) || (puntoGanadoJ2 == 5)){
                 System.out.println("Game para " + nom_j2);
                 gameGanado = 2; // game ganado por el jugador 2
             }
-            else if (puntoGanadoJ1 == 4 && puntoGanadoJ2 == 3){
+
+            else if (puntoGanadoJ1 == 4 && puntoGanadoJ2 == 4){
                 puntoGanadoJ1 -= 1;
-            }
+                puntoGanadoJ2 -=1;
+            }/*
             else if (puntoGanadoJ2 == 4 && puntoGanadoJ1 == 3){
                 puntoGanadoJ1 -= 1;
-            }
+            }*/
         }while (!((gameGanado == 1 || gameGanado == 2)));
         if (saca == 1){ saca = 2; }
         else { saca = 1;}
@@ -68,7 +69,7 @@ public class Game {
         puntoGanadoJ2 = 0;
         return gameGanado;
     }
-
+    //{"0", "15", "30", "40", "Ventaja"}
     public int seJuegaTieBreak(String nom_j1, String nom_j2){
         int tieBreak = 0;
         System.out.println("Comienzo del Tie-Break");

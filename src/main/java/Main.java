@@ -1,9 +1,14 @@
+import java.util.Arrays;
 import java.util.Scanner;
-
+import java.util.Random;
 
 public class Main {
 
     public static void main(String[] args) {
+        int resultSetGanadoJ1[];
+        int resultSetGanadoJ2[];
+        String resultJ1 = "";
+        String resultJ2 = "";
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese nombre del torneo: ");
         String nombreTorneo = sc.nextLine();
@@ -23,20 +28,27 @@ public class Main {
             bo = sc.nextInt();
         }while (!((bo == 3) || (bo == 5)));
         System.out.println("Probabilidad jugador 1: " + probJugador1);
-
-
-        /*
-        Game game = new Game(0,0,1);
-        int gameGanado = game.seJuegaGame(jugador1, jugador2,probJugador1);
-        if (gameGanado == 1){
-            System.out.println("Gano jugador1");
+        int quienSaca = saca();
+        Game game = new Game(quienSaca,probJugador1);
+        Set set = new Set(game);
+        Partido partido = new Partido(jugador1, jugador2,probJugador1, bo, set);
+        int ganador = partido.seJuegaPartido();
+        if(ganador ==1){
+            System.out.println("Partido finalizado. Ganó " + jugador1 + " el torneo " + nombreTorneo);
         }
         else {
-            System.out.println("Gano jugador2");
-        }*/
+            System.out.println("Partido finalizado. Ganó " + jugador2 + " el torneo " + nombreTorneo);
+        }
+        resultSetGanadoJ1 = partido.getGamesGanadosJ1();
+        resultSetGanadoJ2 = partido.getGamesGanadosJ2();
+        for (int i = 0; i < partido.getCantidadSetParaGanar(); i++){
+            resultJ1 += Integer.toString(resultSetGanadoJ1[i]) + " ";
+            resultJ2 += Integer.toString(resultSetGanadoJ2[i]) + " ";
+        }
+        System.out.println("Marcador final: ");
+        System.out.println(jugador1 + " " + resultJ1);
+        System.out.println(jugador2 + " " + resultJ2);
     }
-
-
 
     public static boolean esNumerico(String cadena){
         int v;
@@ -52,4 +64,10 @@ public class Main {
         }
     }
 
+    public static int saca(){
+        Random rn = new Random();
+        double nroAleatorio = rn.nextDouble();
+        if (nroAleatorio <= 0.5) { return 1;}
+        else return 2;
+    }
 }
