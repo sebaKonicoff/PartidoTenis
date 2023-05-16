@@ -54,12 +54,18 @@ public class Set {
             }
             else if (gameGanadoJ1 == 6 && gameGanadoJ2 == 6){
                 System.out.println("Comienzo de Tie-Break");
-                game.seJuegaTieBreak(nom_j1, nom_j2);
+                int tieBreakGanado = game.seJuegaTieBreak(nom_j1, nom_j2);
+                if (tieBreakGanado == 1){
+                    gameGanadoJ1 += 1;
+                    setGanado = 1;
+                }
+                else {
+                    gameGanadoJ2 += 1;
+                    setGanado = 2;
+                }
             }
 
         }while (!((setGanado == 1 || setGanado == 2)));
-        //System.out.println(nom_j1 + ": " + gameGanadoJ1);
-        //System.out.println(nom_j2 + ": " + gameGanadoJ2);
         return setGanado;
     }
 }

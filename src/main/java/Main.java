@@ -5,10 +5,7 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-        int resultSetGanadoJ1[];
-        int resultSetGanadoJ2[];
-        String resultJ1 = "";
-        String resultJ2 = "";
+
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese nombre del torneo: ");
         String nombreTorneo = sc.nextLine();
@@ -27,7 +24,7 @@ public class Main {
             System.out.print("Sets al mejor de (3 o 5): ");
             bo = sc.nextInt();
         }while (!((bo == 3) || (bo == 5)));
-        System.out.println("Probabilidad jugador 1: " + probJugador1);
+        System.out.println("Probabilidad que tiene de ganar " + probJugador1 + ": ");
         int quienSaca = saca();
         Game game = new Game(quienSaca,probJugador1);
         Set set = new Set(game);
@@ -39,15 +36,8 @@ public class Main {
         else {
             System.out.println("Partido finalizado. Ganó " + jugador2 + " el torneo " + nombreTorneo);
         }
-        resultSetGanadoJ1 = partido.getGamesGanadosJ1();
-        resultSetGanadoJ2 = partido.getGamesGanadosJ2();
-        for (int i = 0; i < partido.getCantidadSetParaGanar(); i++){
-            resultJ1 += Integer.toString(resultSetGanadoJ1[i]) + " ";
-            resultJ2 += Integer.toString(resultSetGanadoJ2[i]) + " ";
-        }
-        System.out.println("Marcador final: ");
-        System.out.println(jugador1 + " " + resultJ1);
-        System.out.println(jugador2 + " " + resultJ2);
+        mostrarRestultadoFinal(jugador1,jugador2, partido);
+
     }
 
     public static boolean esNumerico(String cadena){
@@ -69,5 +59,33 @@ public class Main {
         double nroAleatorio = rn.nextDouble();
         if (nroAleatorio <= 0.5) { return 1;}
         else return 2;
+    }
+
+    public static void mostrarRestultadoFinal(String nomJ1, String nomJ2, Partido partido){
+        int resultSetGanadoJ1[];
+        int resultSetGanadoJ2[];
+        int difString = Math.abs(nomJ1.length() - nomJ2.length());
+        String resultJ1 = "";
+        String resultJ2 = "";
+
+        resultSetGanadoJ1 = partido.getGamesGanadosJ1();
+        resultSetGanadoJ2 = partido.getGamesGanadosJ2();
+        for (int i = 0; i <= partido.getCantidadSetParaGanar(); i++){
+            resultJ1 += Integer.toString(resultSetGanadoJ1[i]) + " ";
+            resultJ2 += Integer.toString(resultSetGanadoJ2[i]) + " ";
+        }
+
+        for (int i = 0; i < difString; i++){
+            if (nomJ1.length() < nomJ2.length()){
+                nomJ1 += " ";
+            }
+            else if (nomJ1.length() > nomJ2.length()){
+                nomJ2 += " ";
+            }
+        }
+        System.out.println("Marcador final: ");
+        System.out.println(nomJ1 + " " + resultJ1);
+        System.out.println(nomJ2 + " " + resultJ2);
+
     }
 }

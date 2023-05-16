@@ -16,35 +16,11 @@ public class Game {
         this.prob_j1 = prob_j1;
     }
 
-    public int getPuntoGanadoJ1() {
-        return puntoGanadoJ1;
-    }
-
-    public int getPuntoGanadoJ2() {
-        return puntoGanadoJ2;
-    }
-
-    public void setPuntoGanadoJ1(int puntoGanadoJ1) {
-        this.puntoGanadoJ1 = puntoGanadoJ1;
-    }
-
-    public void setPuntoGanadoJ2(int puntoGanadoJ2) {
-        this.puntoGanadoJ2 = puntoGanadoJ2;
-    }
-
-    public int getSaca() {
-        return saca;
-    }
-
-    public void setSaca(int saca) {
-        this.saca = saca;
-    }
-
     public int seJuegaGame(String nom_j1, String nom_j2){
         int gameGanado = 0; // =1 game ganado para jugador 1. =2 game ganado para jugador2
         System.out.println();
         do{
-            seJuegaPunto(nom_j1, nom_j2);
+            seJuegaPunto(nom_j1, nom_j2, false);
 
             if ((puntoGanadoJ1 == 4 && puntoGanadoJ2 <=2) || (puntoGanadoJ1 == 5)){
                 System.out.println("Game para " + nom_j1);
@@ -58,10 +34,7 @@ public class Game {
             else if (puntoGanadoJ1 == 4 && puntoGanadoJ2 == 4){
                 puntoGanadoJ1 -= 1;
                 puntoGanadoJ2 -=1;
-            }/*
-            else if (puntoGanadoJ2 == 4 && puntoGanadoJ1 == 3){
-                puntoGanadoJ1 -= 1;
-            }*/
+            }
         }while (!((gameGanado == 1 || gameGanado == 2)));
         if (saca == 1){ saca = 2; }
         else { saca = 1;}
@@ -76,7 +49,7 @@ public class Game {
         if (saca == 1){ saca = 2; }
         else { saca = 1;} //para hacer que en el tiebreak empiece sacando el que sacó ese game
         do {
-            seJuegaPunto(nom_j1, nom_j2);
+            seJuegaPunto(nom_j1, nom_j2, true);
 
             if (puntoGanadoJ1 == 7 && puntoGanadoJ2 <= 5){
                 System.out.println("Tie-Break para " + nom_j1);
@@ -92,6 +65,8 @@ public class Game {
                 else tieBreak = 2;
             }
         }while (!((tieBreak == 1 || tieBreak == 2)));
+        puntoGanadoJ1 = 0;
+        puntoGanadoJ2 = 0;
         return tieBreak;
     }
 
@@ -105,18 +80,26 @@ public class Game {
                 puntoGanadoJ2 += 1;
                 System.out.println("Punto para " + nom_j2);
             }
+            System.out.println(nom_j1+": "+ puntoGanadoJ1);
+            System.out.println(nom_j2+": "+ puntoGanadoJ2);
         }while (!((puntoGanadoJ1 - puntoGanadoJ2) == 2) || (puntoGanadoJ2 - puntoGanadoJ1) == 2);
     }
 
-     public void seJuegaPunto(String nom_j1, String nom_j2){
+     public void seJuegaPunto(String nom_j1, String nom_j2, boolean tieBreak){
          if (saca == 1){
              System.out.println("Saca jugador " + nom_j1);
          }
          else {
              System.out.println("Saca jugador " +nom_j2);
          }
-         System.out.println(nom_j1+": "+ puntos[puntoGanadoJ1]);
-         System.out.println(nom_j2+": "+ puntos[puntoGanadoJ2]);
+         if (tieBreak){
+             System.out.println(nom_j1+": "+ puntoGanadoJ1);
+             System.out.println(nom_j2+": "+ puntoGanadoJ2);
+         }
+         else {
+             System.out.println(nom_j1+": "+ puntos[puntoGanadoJ1]);
+             System.out.println(nom_j2+": "+ puntos[puntoGanadoJ2]);
+         }
          if (puntoGanado() == 1){
              puntoGanadoJ1 += 1;
              System.out.println("Punto para " + nom_j1);

@@ -25,38 +25,6 @@ public class Partido {
         this.set = set;
     }
 
-    public String getNombre_jugador1() {
-        return nombre_jugador1;
-    }
-
-    public void setNombre_jugador1(String nombre_jugador1) {
-        this.nombre_jugador1 = nombre_jugador1;
-    }
-
-    public String getNombre_jugador2() {
-        return nombre_jugador2;
-    }
-
-    public void setNombre_jugador2(String nombre_jugador2) {
-        this.nombre_jugador2 = nombre_jugador2;
-    }
-
-    public double getProb_jugador1() {
-        return prob_jugador1;
-    }
-
-    public void setProb_jugador1(double prob_jugador1) {
-        this.prob_jugador1 = prob_jugador1;
-    }
-
-    public double getBest_of() {
-        return best_of;
-    }
-
-    public void setBest_of(int best_of) {
-        this.best_of = best_of;
-    }
-
     public int[] getGamesGanadosJ1() {
         return gamesGanadosJ1;
     }
@@ -72,21 +40,24 @@ public class Partido {
     public int seJuegaPartido(){
         int partidoGanado = 0;
         cantidadSetParaGanar =(best_of /2 )+0.5;
-        gamesGanadosJ1 = new int[(int)cantidadSetParaGanar];
-        gamesGanadosJ2 = new int[(int)cantidadSetParaGanar];
+        gamesGanadosJ1 = new int[(int)best_of];
+        gamesGanadosJ2 = new int[(int)best_of];
         System.out.println("Canitdad de set para ganar: " + cantidadSetParaGanar);
         System.out.println("Comienzo del partido.");
-        for (int i = 0; i < best_of; i++){
+        for (int i = 0; i <= best_of; i++){
+            System.out.println("=========================");
             if (set.seJuegaSet(nombre_jugador1, nombre_jugador2) == 1){
                 setGanadoJ1 += 1;
             }
-            else { setGanadoJ2 += 2; }
+            else { setGanadoJ2 += 1; }
             gamesGanadosJ1[i] = set.getGameGanadoJ1();
             gamesGanadosJ2[i] = set.getGameGanadoJ2();
             System.out.println(nombre_jugador1 + ": " + gamesGanadosJ1[i]);
             System.out.println(nombre_jugador2 + ": " + gamesGanadosJ2[i]);
-            set.setGameGanadoJ1(0);
-            set.setGameGanadoJ2(0);
+            if (partidoGanado == 0){
+                set.setGameGanadoJ1(0);
+                set.setGameGanadoJ2(0);
+            }
             if (setGanadoJ1 == cantidadSetParaGanar){
                 partidoGanado = 1;
                 break;
@@ -95,6 +66,7 @@ public class Partido {
                 partidoGanado = 2;
                 break;
             }
+
         }
         return partidoGanado;
     }
